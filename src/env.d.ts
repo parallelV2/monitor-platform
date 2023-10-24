@@ -8,4 +8,6 @@ declare module '*.vue' {
 }
 interface ImportMetaEnv {
   readonly VITE_API_BASE_URL: string;
+  readonly VITE_SSO: string;
+  readonly VITE_SSO_KEY: string;
 }
