@@ -1,6 +1,7 @@
 import axios from 'axios';
 import type { RouteRecordNormalized } from 'vue-router';
-import { UserState } from '@/store/modules/user/types';
+import type { SSOUserData } from '@/types/user';
+import { ENV } from '@/config';
 
 export interface LoginData {
   username: string;
@@ -10,16 +11,29 @@ export interface LoginData {
 export interface LoginRes {
   token: string;
 }
-export function login(data: LoginData) {
-  return axios.post<LoginRes>('/api/user/login', data);
+
+export interface SSOLoginRes {
+  token: string;
+  user: SSOUserData;
+}
+
+export function login(ticket: string) {
+  return axios.get<SSOUserData>(`/user/validate`, {
+    headers: {
+      Authorization: `Bearer ${ticket}`,
+    },
+    baseURL: ENV.SSO_API,
+  });
 }
 
 export function logout() {
   return axios.post<LoginRes>('/api/user/logout');
 }
 
-export function getUserInfo() {
-  return axios.post<UserState>('/api/user/info');
+export function getUserInfo(id: number) {
+  return axios.get<SSOUserData>(`/user/${id}`, {
+    baseURL: ENV.SSO_API,
+  });
 }
 
 export function getMenuList() {

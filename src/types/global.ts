@@ -35,3 +35,9 @@ export interface GeneralChart {
   xAxis: string[];
   data: Array<{ name: string; value: number[] }>;
 }
+
+export interface Restful<T> {
+  code: number;
+  msg: string;
+  data: T;
+}
