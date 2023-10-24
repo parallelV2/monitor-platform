@@ -2,7 +2,7 @@
   <div class="container">
     <a-typography>
       <a-typography-title style="margin: 0 0 12px" :heading="2">
-        图像对比
+        性能分析
       </a-typography-title>
     </a-typography>
 
@@ -13,21 +13,13 @@
           <a-card>
             <span class="title">基本配置</span>
             <a-form :model="form" layout="vertical" style="margin: 16px 0">
-              <a-form-item
-                field="beforeUrl"
-                label="分析页面（开发前）"
-                required
-              >
-                <a-input
-                  v-model="form.beforeUrl"
-                  placeholder="请输入分析页面（开发前）"
-                />
+              <a-form-item field="url" label="分析页面" required>
+                <a-input v-model="form.url" placeholder="请输入分析页面" />
               </a-form-item>
-              <a-form-item field="afterUrl" label="分析页面（开发后）" required>
+              <a-form-item field="errorDetect" label="错误检测" required>
                 <a-input
-                  v-model="form.afterUrl"
-                  placeholder="请输入分析页面（开发后）"
-                  required
+                  v-model="form.errorDetect"
+                  placeholder="请输入错误检测"
                 />
               </a-form-item>
             </a-form>
@@ -40,7 +32,7 @@
 
       <a-col :span="10">
         <a-space direction="vertical" fill>
-          <compare-helper />
+          <analyze-helper />
           <a-button type="primary" long @click="handleSubmit">提交</a-button>
         </a-space>
       </a-col>
@@ -54,11 +46,11 @@
   import { ParamsSettingForm } from '@/components/params-setting/types';
 
   import ParamsSetting from '@/components/params-setting/index.vue';
-  import CompareHelper from './components/compare-helper.vue';
+  import AnalyzeHelper from './components/analyze-helper.vue';
 
   const form = reactive({
-    beforeUrl: '',
-    afterUrl: '',
+    url: '',
+    errorDetect: '',
   });
 
   const paramsSettingForm = reactive<ParamsSettingForm>({

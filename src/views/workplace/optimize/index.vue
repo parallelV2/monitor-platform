@@ -2,7 +2,7 @@
   <div class="container">
     <a-typography>
       <a-typography-title style="margin: 0 0 12px" :heading="2">
-        图像对比
+        性能优化
       </a-typography-title>
     </a-typography>
 
@@ -13,22 +13,12 @@
           <a-card>
             <span class="title">基本配置</span>
             <a-form :model="form" layout="vertical" style="margin: 16px 0">
-              <a-form-item
-                field="beforeUrl"
-                label="分析页面（开发前）"
-                required
-              >
-                <a-input
-                  v-model="form.beforeUrl"
-                  placeholder="请输入分析页面（开发前）"
-                />
-              </a-form-item>
-              <a-form-item field="afterUrl" label="分析页面（开发后）" required>
-                <a-input
-                  v-model="form.afterUrl"
-                  placeholder="请输入分析页面（开发后）"
-                  required
-                />
+              <a-form-item field="role" label="性能分析人物">
+                <a-select placeholder="请选择性能分析人物">
+                  <template v-for="option in rolesOptions" :key="option.id">
+                    <a-option>{{ option.label }}</a-option>
+                  </template>
+                </a-select>
               </a-form-item>
             </a-form>
           </a-card>
@@ -40,7 +30,7 @@
 
       <a-col :span="10">
         <a-space direction="vertical" fill>
-          <compare-helper />
+          <optimize-helper />
           <a-button type="primary" long @click="handleSubmit">提交</a-button>
         </a-space>
       </a-col>
@@ -49,16 +39,15 @@
 </template>
 
 <script setup lang="ts">
-  import { reactive } from 'vue';
+  import { onMounted, reactive, ref } from 'vue';
 
   import { ParamsSettingForm } from '@/components/params-setting/types';
 
   import ParamsSetting from '@/components/params-setting/index.vue';
-  import CompareHelper from './components/compare-helper.vue';
+  import OptimizeHelper from './components/optimize-helper.vue';
 
   const form = reactive({
-    beforeUrl: '',
-    afterUrl: '',
+    role: '',
   });
 
   const paramsSettingForm = reactive<ParamsSettingForm>({
@@ -67,6 +56,13 @@
     isReport: true,
     compareInterval: 30,
   });
+
+  const rolesOptions = ref([
+    {
+      label: '测试用户1',
+      id: 1,
+    },
+  ]);
 
   const handleSubmit = () => {
     alert(JSON.stringify({ form, paramsSettingForm }));

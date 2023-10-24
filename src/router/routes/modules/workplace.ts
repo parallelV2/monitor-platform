@@ -22,6 +22,36 @@ const DASHBOARD: AppRouteRecordRaw = {
         roles: ['*'],
       },
     },
+    {
+      path: 'analyze',
+      name: 'Analyze',
+      component: () => import('@/views/workplace/analyze/index.vue'),
+      meta: {
+        locale: 'menu.workplace.analyze',
+        requiresAuth: true,
+        roles: ['*'],
+      },
+    },
+    {
+      path: 'optimize',
+      name: 'Optimize',
+      component: () => import('@/views/workplace/optimize/index.vue'),
+      meta: {
+        locale: 'menu.workplace.optimize',
+        requiresAuth: true,
+        roles: ['*'],
+      },
+    },
+    {
+      path: 'record',
+      name: 'Record',
+      component: () => import('@/views/workplace/record/index.vue'),
+      meta: {
+        locale: 'menu.workplace.record',
+        requiresAuth: true,
+        roles: ['*'],
+      },
+    },
   ],
 };
 
