@@ -3,7 +3,7 @@
     <div class="login-form-title">{{ $t('login.form.title') }}</div>
     <div class="login-form-error-msg">{{ errorMessage }}</div>
 
-    <a-button type="primary" @click="redirectSSO">使用SSO登录</a-button>
+    <a-button type="primary" long @click="redirectSSO">使用SSO登录</a-button>
   </div>
 </template>
 
