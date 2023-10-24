@@ -2,7 +2,7 @@
   <a-card>
     <span class="title">参数调整</span>
 
-    <a-form :model="form" style="margin: 16px 0">
+    <a-form auto-label-width :model="form" style="margin: 16px 0">
       <a-form-item field="isWechatNotify" label="是否开启企微通知">
         <a-switch v-model="form.isWechatNotify" />
       </a-form-item>
@@ -19,6 +19,7 @@
       </a-form-item>
       <a-form-item field="compareInterval" label="图像对比前后间隔">
         <a-input-number
+          v-model="form.compareInterval"
           mode="button"
           placeholder="请输入图像对比前后间隔(s)"
           :default-value="5"

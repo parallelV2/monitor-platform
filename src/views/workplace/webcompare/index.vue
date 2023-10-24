@@ -68,7 +68,9 @@
     compareInterval: 30,
   });
 
-  const handleSubmit = () => {};
+  const handleSubmit = () => {
+    alert(JSON.stringify({ form, paramsSettingForm }));
+  };
 </script>
 
 <style scoped>
