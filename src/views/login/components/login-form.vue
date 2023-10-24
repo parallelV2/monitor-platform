@@ -34,6 +34,7 @@
       try {
         await userStore.login(ticket as string);
         const { redirect, ...othersQuery } = router.currentRoute.value.query;
+        delete othersQuery.ticket;
         router.push({
           name: (redirect as string) || 'Webcompare',
           query: {
