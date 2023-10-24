@@ -2,22 +2,22 @@ import { DEFAULT_LAYOUT } from '../base';
 import { AppRouteRecordRaw } from '../types';
 
 const DASHBOARD: AppRouteRecordRaw = {
-  path: '/dashboard',
-  name: 'dashboard',
+  path: '/workplace',
+  name: 'Workplace',
   component: DEFAULT_LAYOUT,
   meta: {
-    locale: 'menu.dashboard',
+    locale: 'menu.workplace',
     requiresAuth: true,
     icon: 'icon-dashboard',
     order: 0,
   },
   children: [
     {
-      path: 'workplace',
-      name: 'Workplace',
-      component: () => import('@/views/dashboard/workplace/index.vue'),
+      path: 'webcompare',
+      name: 'Webcompare',
+      component: () => import('@/views/workplace/webcompare/index.vue'),
       meta: {
-        locale: 'menu.dashboard.workplace',
+        locale: 'menu.workplace.webcompare',
         requiresAuth: true,
         roles: ['*'],
       },

@@ -1,5 +1,7 @@
 <template>
-  <a-layout-footer class="footer">Arco Pro</a-layout-footer>
+  <a-layout-footer class="footer"
+    >异步浏览器页面智能可视化分析系统
+  </a-layout-footer>
 </template>
 
 <script lang="ts" setup></script>
