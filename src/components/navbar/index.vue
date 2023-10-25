@@ -64,6 +64,7 @@
           :arrow-style="{ display: 'none' }"
           :content-style="{ padding: 0, minWidth: '400px' }"
           content-class="message-popover"
+          position="br"
         >
           <div ref="refBtn" class="ref-btn"></div>
           <template #content>
