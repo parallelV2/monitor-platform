@@ -3,7 +3,9 @@
     <div class="login-form-title">{{ $t('login.form.title') }}</div>
     <div class="login-form-error-msg">{{ errorMessage }}</div>
 
-    <a-button type="primary" long @click="redirectSSO">使用SSO登录</a-button>
+    <a-button type="primary" long :loading="loading" @click="redirectSSO"
+      >使用SSO登录</a-button
+    >
   </div>
 </template>
 
@@ -20,7 +22,7 @@
   const route = useRoute();
   const { t } = useI18n();
   const errorMessage = ref('');
-  const { setLoading } = useLoading();
+  const { loading, setLoading } = useLoading();
   const userStore = useUserStore();
 
   const redirectSSO = () => {

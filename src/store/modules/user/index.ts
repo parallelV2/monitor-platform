@@ -4,7 +4,7 @@ import {
   logout as userLogout,
   getUserInfo,
 } from '@/api/user';
-import { setToken, clearToken } from '@/utils/auth';
+import { setToken, clearToken, setLocalID, getLocalID } from '@/utils/auth';
 import { removeRouteListener } from '@/utils/route-listener';
 import { UserState } from './types';
 import useAppStore from '../app';
@@ -55,7 +55,10 @@ const useUserStore = defineStore('user', {
 
     // Get user's information
     async info() {
-      const res = await getUserInfo(this.id || 0);
+      if (!this.id) {
+        this.id = getLocalID();
+      }
+      const res = await getUserInfo(this.id);
 
       this.setInfo(res.data);
     },
@@ -66,6 +69,7 @@ const useUserStore = defineStore('user', {
         const res = await userLogin(token);
         this.id = res.data.id;
         setToken(token);
+        setLocalID(this.id);
       } catch (err) {
         clearToken();
         throw err;
