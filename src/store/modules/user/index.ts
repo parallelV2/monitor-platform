@@ -4,29 +4,22 @@ import {
   logout as userLogout,
   getUserInfo,
 } from '@/api/user';
-import { setToken, clearToken, setLocalID, getLocalID } from '@/utils/auth';
+import {
+  setToken,
+  clearToken,
+  setLocalID,
+  getLocalID,
+  clearLocalID,
+} from '@/utils/auth';
 import { removeRouteListener } from '@/utils/route-listener';
 import { UserState } from './types';
 import useAppStore from '../app';
 
 const useUserStore = defineStore('user', {
   state: (): UserState => ({
-    name: undefined,
+    nickname: undefined,
     avatar: undefined,
-    job: undefined,
-    organization: undefined,
-    location: undefined,
     email: undefined,
-    introduction: undefined,
-    personalWebsite: undefined,
-    jobName: undefined,
-    organizationName: undefined,
-    locationName: undefined,
-    phone: undefined,
-    registrationDate: undefined,
-    accountId: undefined,
-    certification: undefined,
-    role: '',
     id: 0,
   }),
 
@@ -37,12 +30,6 @@ const useUserStore = defineStore('user', {
   },
 
   actions: {
-    switchRoles() {
-      return new Promise((resolve) => {
-        this.role = this.role === 'user' ? 'admin' : 'user';
-        resolve(this.role);
-      });
-    },
     // Set user's information
     setInfo(partial: Partial<UserState>) {
       this.$patch(partial);
@@ -79,6 +66,7 @@ const useUserStore = defineStore('user', {
       const appStore = useAppStore();
       this.resetInfo();
       clearToken();
+      clearLocalID();
       removeRouteListener();
       appStore.clearServerMenu();
     },

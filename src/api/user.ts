@@ -18,6 +18,7 @@ export interface SSOLoginRes {
 }
 
 export function login(ticket: string) {
+  // TODO: 后续替换为后端接口，签发长效token
   return axios.get<SSOUserData>(`/user/validate`, {
     headers: {
       Authorization: `Bearer ${ticket}`,
@@ -31,6 +32,7 @@ export function logout() {
 }
 
 export function getUserInfo(id: number) {
+  // TODO: 后续替换为后端接口，获取用户信息
   return axios.get<SSOUserData>(`/user/${id}`, {
     baseURL: ENV.SSO_API,
   });
