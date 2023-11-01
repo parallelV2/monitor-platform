@@ -13,8 +13,8 @@
           <a-card>
             <span class="title">基本配置</span>
             <a-form :model="form" layout="vertical" style="margin: 16px 0">
-              <a-form-item field="role" label="性能分析人物">
-                <a-select placeholder="请选择性能分析人物">
+              <a-form-item field="role" label="性能分析任务">
+                <a-select placeholder="请选择性能分析任务">
                   <template v-for="option in rolesOptions" :key="option.id">
                     <a-option>{{ option.label }}</a-option>
                   </template>
@@ -59,7 +59,7 @@
 
   const rolesOptions = ref([
     {
-      label: '测试用户1',
+      label: '测试任务1',
       id: 1,
     },
   ]);

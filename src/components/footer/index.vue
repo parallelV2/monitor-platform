@@ -1,6 +1,6 @@
 <template>
-  <a-layout-footer class="footer"
-    >异步浏览器页面智能可视化分析系统
+  <a-layout-footer class="footer">
+    SZTU 大数据与互联网学院 20级项目实践
   </a-layout-footer>
 </template>
 
