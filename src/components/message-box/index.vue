@@ -34,7 +34,7 @@
     avatar?: string;
   }
   const { loading, setLoading } = useLoading(true);
-  const messageType = ref('message');
+  const messageType = ref('notice');
   const messageData = reactive<{
     renderList: MessageRecord[];
     messageList: MessageRecord[];

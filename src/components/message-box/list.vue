@@ -44,7 +44,7 @@
   import { PropType } from 'vue';
   import { MessageRecord, MessageListType } from '@/api/message';
 
-  const props = defineProps({
+  defineProps({
     renderList: {
       type: Array as PropType<MessageListType>,
       required: true,
