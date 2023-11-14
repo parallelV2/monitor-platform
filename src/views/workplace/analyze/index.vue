@@ -17,9 +17,14 @@
                 <a-input v-model="form.url" placeholder="请输入分析页面" />
               </a-form-item>
               <a-form-item field="errorDetect" label="错误检测" required>
-                <a-input
-                  v-model="form.errorDetect"
-                  placeholder="请输入错误检测"
+                <a-switch v-model="form.errorDetect" />
+              </a-form-item>
+              <a-form-item field="errorDetect" label="超时时间(ms)" required>
+                <a-input-number
+                  v-model="form.timeout"
+                  :step="1000"
+                  placeholder="超时时间"
+                  mode="button"
                 />
               </a-form-item>
             </a-form>
@@ -45,23 +50,34 @@
 
   import { ParamsSettingForm } from '@/components/params-setting/types';
 
+  import { Message } from '@arco-design/web-vue';
+
   import ParamsSetting from '@/components/params-setting/index.vue';
+  import { createAnalyzeTask } from '@/api/pa';
+  import { getLocalID } from '@/utils/auth';
   import AnalyzeHelper from './components/analyze-helper.vue';
 
   const form = reactive({
     url: '',
-    errorDetect: '',
+    errorDetect: false,
+    timeout: 30000,
+    user: getLocalID(),
   });
 
   const paramsSettingForm = reactive<ParamsSettingForm>({
     isWechatNotify: true,
     wechatUrl: '',
-    isReport: true,
-    compareInterval: 30,
+    optReport: true,
+    screenshotSpan: 30,
   });
 
-  const handleSubmit = () => {
-    alert(JSON.stringify({ form, paramsSettingForm }));
+  const handleSubmit = async () => {
+    await createAnalyzeTask({
+      ...form,
+      ...paramsSettingForm,
+    });
+
+    Message.success('创建成功');
   };
 </script>
 
