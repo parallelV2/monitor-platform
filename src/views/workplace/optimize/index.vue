@@ -13,10 +13,15 @@
           <a-card>
             <span class="title">基本配置</span>
             <a-form :model="form" layout="vertical" style="margin: 16px 0">
-              <a-form-item field="role" label="性能分析任务">
-                <a-select placeholder="请选择性能分析任务">
-                  <template v-for="option in rolesOptions" :key="option.id">
-                    <a-option>{{ option.label }}</a-option>
+              <a-form-item field="taskId" label="性能分析任务">
+                <a-select
+                  v-model="form.taskId"
+                  placeholder="请选择性能分析任务"
+                >
+                  <template v-for="option in taskOptions" :key="option.id">
+                    <a-option :value="option.value">{{
+                      option.label
+                    }}</a-option>
                   </template>
                 </a-select>
               </a-form-item>
@@ -39,34 +44,53 @@
 </template>
 
 <script setup lang="ts">
-  import { onMounted, reactive, ref } from 'vue';
+  import { reactive, ref, onMounted, computed } from 'vue';
 
   import { ParamsSettingForm } from '@/components/params-setting/types';
 
   import ParamsSetting from '@/components/params-setting/index.vue';
+  import { getLocalID } from '@/utils/auth';
+  import { Message } from '@arco-design/web-vue';
+
+  import { createOptimizeTask } from '@/api/optimize';
+  import { getAnalyzeTaskList, PATask } from '@/api/pa';
   import OptimizeHelper from './components/optimize-helper.vue';
 
   const form = reactive({
-    role: '',
+    taskId: '',
+    user: getLocalID(),
   });
+
+  const tasks = ref<PATask[]>([]);
+
+  const taskOptions = computed(() =>
+    tasks.value.map((i) => ({
+      label: `${i.url} (${i.created})`,
+      value: i.id,
+    }))
+  );
 
   const paramsSettingForm = reactive<ParamsSettingForm>({
     isWechatNotify: true,
     wechatUrl: '',
-    isReport: true,
-    compareInterval: 30,
+    optReport: true,
+    screenshotSpan: 30,
   });
 
-  const rolesOptions = ref([
-    {
-      label: '测试任务1',
-      id: 1,
-    },
-  ]);
+  const handleSubmit = async () => {
+    await createOptimizeTask({
+      ...form,
+      ...paramsSettingForm,
+    });
 
-  const handleSubmit = () => {
-    alert(JSON.stringify({ form, paramsSettingForm }));
+    Message.success('创建成功');
   };
+
+  onMounted(() => {
+    getAnalyzeTaskList().then((res) => {
+      tasks.value = res.data;
+    });
+  });
 </script>
 
 <style scoped></style>
