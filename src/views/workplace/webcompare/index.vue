@@ -61,6 +61,7 @@
 
   import ParamsSetting from '@/components/params-setting/index.vue';
   import { createCompareTask } from '@/api/webcompare';
+  import { getLocalID } from '@/utils/auth';
   import CompareHelper from './components/compare-helper.vue';
 
   const baseFormRef = ref();
@@ -68,6 +69,7 @@
   const form = reactive({
     beforeUrl: '',
     afterUrl: '',
+    user: getLocalID(),
   });
 
   const paramsSettingForm = reactive<ParamsSettingForm>({

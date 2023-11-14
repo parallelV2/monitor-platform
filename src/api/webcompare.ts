@@ -5,6 +5,7 @@ export interface WebCompareParam {
   afterUrl: string;
   optReport: boolean;
   screenshotSpan: number;
+  user: number;
 }
 
 export interface WebCompareTask {
