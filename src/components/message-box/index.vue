@@ -14,23 +14,16 @@
           @item-click="handleItemClick"
         />
       </a-tab-pane>
-      <template #extra>
-        <a-button type="text" @click="emptyList">
-          {{ $t('messageBox.tab.button') }}
-        </a-button>
-      </template>
     </a-tabs>
   </a-spin>
 </template>
 
 <script lang="ts" setup>
   import { ref, reactive, toRefs, computed } from 'vue';
-  import { useI18n } from 'vue-i18n';
   import {
     queryMessageList,
     setMessageStatus,
     MessageRecord,
-    MessageListType,
   } from '@/api/message';
   import useLoading from '@/hooks/loading';
   import List from './list.vue';
@@ -42,7 +35,6 @@
   }
   const { loading, setLoading } = useLoading(true);
   const messageType = ref('message');
-  const { t } = useI18n();
   const messageData = reactive<{
     renderList: MessageRecord[];
     messageList: MessageRecord[];
@@ -53,16 +45,16 @@
   toRefs(messageData);
   const tabList: TabItem[] = [
     {
-      key: 'message',
-      title: t('messageBox.tab.title.message'),
-    },
-    {
       key: 'notice',
-      title: t('messageBox.tab.title.notice'),
+      title: '消息',
     },
     {
-      key: 'todo',
-      title: t('messageBox.tab.title.todo'),
+      key: 'warning',
+      title: '警告',
+    },
+    {
+      key: 'error',
+      title: '错误',
     },
   ];
   async function fetchSourceData() {
@@ -76,9 +68,8 @@
       setLoading(false);
     }
   }
-  async function readMessage(data: MessageListType) {
-    const ids = data.map((item) => item.id);
-    await setMessageStatus({ ids });
+  async function readMessage(data: MessageRecord) {
+    await setMessageStatus(data.id);
     fetchSourceData();
   }
   const renderList = computed(() => {
@@ -87,11 +78,11 @@
     );
   });
   const unreadCount = computed(() => {
-    return renderList.value.filter((item) => !item.status).length;
+    return renderList.value.filter((item) => !item.read).length;
   });
   const getUnreadList = (type: string) => {
     const list = messageData.messageList.filter(
-      (item) => item.type === type && !item.status
+      (item) => item.type === type && !item.read
     );
     return list;
   };
@@ -99,11 +90,8 @@
     const list = getUnreadList(type);
     return list.length ? `(${list.length})` : ``;
   };
-  const handleItemClick = (items: MessageListType) => {
-    if (renderList.value.length) readMessage([...items]);
-  };
-  const emptyList = () => {
-    messageData.messageList = [];
+  const handleItemClick = (item: MessageRecord) => {
+    if (renderList.value.length) readMessage(item);
   };
   fetchSourceData();
 </script>
