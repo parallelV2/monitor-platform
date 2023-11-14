@@ -4,13 +4,7 @@
 
     <a-typography style="margin: 16px 0">
       <a-typography-paragraph>
-        A design is a plan or specification for the construction of an object or
-        system or for the implementation of an activity or process, or the
-        result of that plan or specification in the form of a prototype, product
-        or process. The verb to design expresses the process of developing a
-        design. In some cases, the direct construction of an object without an
-        explicit prior plan (such as in craftwork, some engineering, coding, and
-        graphic design) may also be considered to be a design activity.
+        针对已有的性能分析任务，通过ChatGPT给出优化建议
       </a-typography-paragraph>
     </a-typography>
   </a-card>
