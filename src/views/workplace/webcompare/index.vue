@@ -12,7 +12,12 @@
           <!-- 基本配置 -->
           <a-card>
             <span class="title">基本配置</span>
-            <a-form :model="form" layout="vertical" style="margin: 16px 0">
+            <a-form
+              ref="baseFormRef"
+              :model="form"
+              layout="vertical"
+              style="margin: 16px 0"
+            >
               <a-form-item
                 field="beforeUrl"
                 label="分析页面（开发前）"
@@ -49,12 +54,16 @@
 </template>
 
 <script setup lang="ts">
-  import { reactive } from 'vue';
+  import { reactive, ref } from 'vue';
 
   import { ParamsSettingForm } from '@/components/params-setting/types';
+  import { Message } from '@arco-design/web-vue';
 
   import ParamsSetting from '@/components/params-setting/index.vue';
+  import { createCompareTask } from '@/api/webcompare';
   import CompareHelper from './components/compare-helper.vue';
+
+  const baseFormRef = ref();
 
   const form = reactive({
     beforeUrl: '',
@@ -64,12 +73,17 @@
   const paramsSettingForm = reactive<ParamsSettingForm>({
     isWechatNotify: true,
     wechatUrl: '',
-    isReport: true,
-    compareInterval: 30,
+    optReport: true,
+    screenshotSpan: 30,
   });
 
-  const handleSubmit = () => {
-    alert(JSON.stringify({ form, paramsSettingForm }));
+  const handleSubmit = async () => {
+    await createCompareTask({
+      ...form,
+      ...paramsSettingForm,
+    });
+
+    Message.success('创建成功');
   };
 </script>
 
