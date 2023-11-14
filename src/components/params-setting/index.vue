@@ -14,12 +14,12 @@
       >
         <a-input v-model="form.wechatUrl" placeholder="请输入企微回调地址" />
       </a-form-item>
-      <a-form-item field="isReport" label="同步生成优化报告">
-        <a-switch v-model="form.isReport" />
+      <a-form-item field="optReport" label="同步生成优化报告">
+        <a-switch v-model="form.optReport" />
       </a-form-item>
-      <a-form-item field="compareInterval" label="图像对比前后间隔">
+      <a-form-item field="screenshotSpan" label="图像对比前后间隔">
         <a-input-number
-          v-model="form.compareInterval"
+          v-model="form.screenshotSpan"
           mode="button"
           placeholder="请输入图像对比前后间隔(s)"
           :default-value="5"
