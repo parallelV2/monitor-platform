@@ -9,6 +9,9 @@ export interface OptimizeTask {
   id: string;
   created: string;
   user: number;
+  taskId: string;
+  url: string;
+  finished: string;
   status: 0 | 1 | 2;
 }
 
