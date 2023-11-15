@@ -8,7 +8,7 @@
       </div>
     </template>
     <template #extra>
-      <a-button size="mini" type="text">
+      <a-button v-if="report.status === 1" size="mini" type="text">
         <template #icon>
           <icon-drive-file />
         </template>
