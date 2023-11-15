@@ -14,7 +14,7 @@
         width="100%"
         :src="imgs.diff"
         title="差异图"
-        description="通过红框指示出差异部分"
+        description="直接展示差异部分"
       />
       <a-image
         width="100%"
