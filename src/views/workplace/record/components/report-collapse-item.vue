@@ -8,27 +8,42 @@
       </div>
     </template>
     <template #extra>
-      <a-button v-if="report.status === 1" size="mini" type="text">
+      <a-button
+        v-if="report.status === 1"
+        size="mini"
+        type="text"
+        @click.stop="detailVisible = true"
+      >
         <template #icon>
           <icon-drive-file />
         </template>
         查看报告
       </a-button>
     </template>
+
+    <report-detail
+      :id="report.id"
+      v-model:visible="detailVisible"
+      :task-id="report.taskId"
+      :url="report.url"
+    ></report-detail>
   </a-collapse-item>
 </template>
 
 <script lang="ts" setup>
-  import { computed, toRefs } from 'vue';
+  import { computed, toRefs, ref } from 'vue';
   import type { OptimizeTask } from '@/api/optimize';
   import StatusTag from '@/components/status-tag/index.vue';
   import dayjs from 'dayjs';
+  import ReportDetail from './report-detail.vue';
 
   const props = defineProps<{
     report: OptimizeTask;
   }>();
 
   const { report } = toRefs(props);
+
+  const detailVisible = ref(false);
 
   const content = computed(() => [
     {
@@ -61,7 +76,7 @@
   ]);
 </script>
 
-<style lang="less">
+<style lang="less" scoped>
   .header {
     display: flex;
     align-items: center;
