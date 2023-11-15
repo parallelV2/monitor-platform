@@ -1,5 +1,12 @@
 <template>
-  <a-modal :visible="visible" simple hide-cancel width="800px" @ok="handleOk">
+  <a-modal
+    :visible="visible"
+    simple
+    hide-cancel
+    width="800px"
+    title-align="start"
+    @ok="$emit('update:visible', false)"
+  >
     <template #title> 分析报告 </template>
     <div>
       <p>
@@ -24,15 +31,11 @@
     url: string;
   }>();
 
-  const emit = defineEmits<{
+  defineEmits<{
     (e: 'update:visible', value: boolean): void;
   }>();
 
   const content = ref('');
-
-  const handleOk = () => {
-    emit('update:visible', false);
-  };
 
   const getDetail = () => {
     getOptimizeTaskDetail(props.id).then((res) => {

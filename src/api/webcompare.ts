@@ -15,6 +15,13 @@ export interface WebCompareTask {
   beforeUrl: string;
   afterUrl: string;
   status: 0 | 1 | 2;
+  finished: string;
+}
+
+export interface WebCompareDetail {
+  diff: string;
+  shift: string;
+  indicate: string;
 }
 
 export function createCompareTask(data: WebCompareParam) {
@@ -23,4 +30,8 @@ export function createCompareTask(data: WebCompareParam) {
 
 export function getCompareTaskList() {
   return axios.get<WebCompareTask[]>('/webcompare');
+}
+
+export function getCompareTaskDetail(id: string) {
+  return axios.get<WebCompareDetail>(`/webcompare/${id}`);
 }
