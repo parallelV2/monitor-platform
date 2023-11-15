@@ -8,13 +8,8 @@
     @ok="$emit('update:visible', false)"
   >
     <template #title> 图像对比报告 </template>
-    <p>
-      对比前URL: <a-link :href="beforeUrl" icon>{{ beforeUrl }}</a-link>
-    </p>
-    <p>
-      对比后URL: <a-link :href="afterUrl" icon>{{ afterUrl }}</a-link>
-    </p>
     <a-space direction="vertical" fill size="medium">
+      <a-descriptions :data="des" layout="inline-vertical" size="large" />
       <a-image
         width="100%"
         :src="imgs.diff"
@@ -38,8 +33,9 @@
 </template>
 
 <script setup lang="ts">
-  import { ref, watch } from 'vue';
+  import { ref, watch, computed, h } from 'vue';
   import { getCompareTaskDetail } from '@/api/webcompare';
+  import { Tag as ATag } from '@arco-design/web-vue';
 
   const props = defineProps<{
     visible: boolean;
@@ -58,9 +54,38 @@
     shift: '',
   });
 
+  const pass = ref({
+    diff: true,
+    shift: true,
+  });
+
+  const des = computed(() => [
+    {
+      label: '对比前URL',
+      value: props.beforeUrl,
+    },
+    {
+      label: '对比后URL',
+      value: props.afterUrl,
+    },
+    {
+      label: '差异通过情况',
+      value: pass.value.diff
+        ? () => h(ATag, { color: 'green' }, '通过')
+        : () => h(ATag, { color: 'red' }, '不通过'),
+    },
+    {
+      label: '偏移通过情况',
+      value: pass.value.shift
+        ? () => h(ATag, { color: 'green' }, '通过')
+        : () => h(ATag, { color: 'red' }, '不通过'),
+    },
+  ]);
+
   const getDetail = () => {
     getCompareTaskDetail(props.id).then((res) => {
-      imgs.value = res.data;
+      imgs.value = res.data.imgs;
+      pass.value = res.data.pass;
     });
   };
 

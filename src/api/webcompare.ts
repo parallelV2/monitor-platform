@@ -19,9 +19,15 @@ export interface WebCompareTask {
 }
 
 export interface WebCompareDetail {
-  diff: string;
-  shift: string;
-  indicate: string;
+  imgs: {
+    diff: string;
+    shift: string;
+    indicate: string;
+  };
+  pass: {
+    diff: boolean;
+    shift: boolean;
+  };
 }
 
 export function createCompareTask(data: WebCompareParam) {
