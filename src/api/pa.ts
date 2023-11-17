@@ -1,11 +1,11 @@
 import axios from 'axios';
+import { getLocalID } from '@/utils/auth';
 
 export interface PAParam {
   url: string;
   errorDetect: boolean;
   optReport: boolean;
   timeout: number;
-  user: number;
 }
 
 export interface PATask {
@@ -17,7 +17,7 @@ export interface PATask {
 }
 
 export function createAnalyzeTask(data: PAParam) {
-  return axios.post('/pa', data);
+  return axios.post('/pa', { ...data, user: getLocalID() });
 }
 
 export function getAnalyzeTaskList() {

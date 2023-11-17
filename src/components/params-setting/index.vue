@@ -3,17 +3,6 @@
     <span class="title">参数调整</span>
 
     <a-form auto-label-width :model="form" style="margin: 16px 0">
-      <a-form-item field="isWechatNotify" label="是否开启企微通知">
-        <a-switch v-model="form.isWechatNotify" />
-      </a-form-item>
-      <a-form-item
-        v-if="form.isWechatNotify"
-        field="wechatUrl"
-        label="企微回调地址"
-        required
-      >
-        <a-input v-model="form.wechatUrl" placeholder="请输入企微回调地址" />
-      </a-form-item>
       <a-form-item field="optReport" label="同步生成优化报告">
         <a-switch v-model="form.optReport" />
       </a-form-item>

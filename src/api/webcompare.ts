@@ -1,11 +1,11 @@
 import axios from 'axios';
+import { getLocalID } from '@/utils/auth';
 
 export interface WebCompareParam {
   beforeUrl: string;
   afterUrl: string;
   optReport: boolean;
   screenshotSpan: number;
-  user: number;
 }
 
 export interface WebCompareTask {
@@ -31,7 +31,7 @@ export interface WebCompareDetail {
 }
 
 export function createCompareTask(data: WebCompareParam) {
-  return axios.post('/webcompare', data);
+  return axios.post('/webcompare', { ...data, user: getLocalID() });
 }
 
 export function getCompareTaskList() {

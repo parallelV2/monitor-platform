@@ -49,7 +49,6 @@
   import { ParamsSettingForm } from '@/components/params-setting/types';
 
   import ParamsSetting from '@/components/params-setting/index.vue';
-  import { getLocalID } from '@/utils/auth';
   import { Message } from '@arco-design/web-vue';
 
   import { createOptimizeTask } from '@/api/optimize';
@@ -58,7 +57,6 @@
 
   const form = reactive({
     taskId: '',
-    user: getLocalID(),
   });
 
   const tasks = ref<PATask[]>([]);
@@ -71,8 +69,6 @@
   );
 
   const paramsSettingForm = reactive<ParamsSettingForm>({
-    isWechatNotify: true,
-    wechatUrl: '',
     optReport: true,
     screenshotSpan: 30,
   });

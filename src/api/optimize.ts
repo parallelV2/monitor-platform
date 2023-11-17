@@ -1,8 +1,8 @@
 import axios from 'axios';
+import { getLocalID } from '@/utils/auth';
 
 export interface OptimizeParam {
   taskId: string;
-  user: number;
 }
 
 export interface OptimizeTask {
@@ -20,7 +20,7 @@ export interface OptimizeTaskDetail {
 }
 
 export function createOptimizeTask(data: OptimizeParam) {
-  return axios.post('/optimize', data);
+  return axios.post('/optimize', { ...data, user: getLocalID() });
 }
 
 export function getOptimizeTaskList() {

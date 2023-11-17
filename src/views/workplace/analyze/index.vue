@@ -54,19 +54,15 @@
 
   import ParamsSetting from '@/components/params-setting/index.vue';
   import { createAnalyzeTask } from '@/api/pa';
-  import { getLocalID } from '@/utils/auth';
   import AnalyzeHelper from './components/analyze-helper.vue';
 
   const form = reactive({
     url: '',
     errorDetect: false,
     timeout: 30000,
-    user: getLocalID(),
   });
 
   const paramsSettingForm = reactive<ParamsSettingForm>({
-    isWechatNotify: true,
-    wechatUrl: '',
     optReport: true,
     screenshotSpan: 30,
   });
