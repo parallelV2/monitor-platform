@@ -12,14 +12,14 @@
           <!-- 基本配置 -->
           <a-card>
             <span class="title">基本配置</span>
-            <a-form :model="form" layout="vertical" style="margin: 16px 0">
+            <a-form ref="baseForm" :model="form" layout="vertical" class="form">
               <a-form-item field="url" label="分析页面" required>
                 <a-input v-model="form.url" placeholder="请输入分析页面" />
               </a-form-item>
-              <a-form-item field="errorDetect" label="错误检测" required>
+              <a-form-item field="errorDetect" label="错误检测">
                 <a-switch v-model="form.errorDetect" />
               </a-form-item>
-              <a-form-item field="errorDetect" label="超时时间(ms)" required>
+              <a-form-item field="timeout" label="超时时间(ms)" required>
                 <a-input-number
                   v-model="form.timeout"
                   :step="1000"
@@ -30,8 +30,19 @@
             </a-form>
           </a-card>
 
-          <!-- 参数调整 -->
-          <params-setting v-model="paramsSettingForm" />
+          <a-card>
+            <span class="title">高级选项</span>
+            <a-form
+              ref="advForm"
+              :model="advConfig"
+              layout="vertical"
+              class="form"
+            >
+              <a-form-item field="optReport" label="同步生成优化报告">
+                <a-switch v-model="advConfig.optReport" />
+              </a-form-item>
+            </a-form>
+          </a-card>
         </a-space>
       </a-col>
 
@@ -46,15 +57,15 @@
 </template>
 
 <script setup lang="ts">
-  import { reactive } from 'vue';
-
-  import { ParamsSettingForm } from '@/components/params-setting/types';
+  import { reactive, ref } from 'vue';
 
   import { Message } from '@arco-design/web-vue';
 
-  import ParamsSetting from '@/components/params-setting/index.vue';
   import { createAnalyzeTask } from '@/api/pa';
   import AnalyzeHelper from './components/analyze-helper.vue';
+
+  const baseForm = ref();
+  const advForm = ref();
 
   const form = reactive({
     url: '',
@@ -62,19 +73,32 @@
     timeout: 30000,
   });
 
-  const paramsSettingForm = reactive<ParamsSettingForm>({
-    optReport: true,
-    screenshotSpan: 30,
+  const advConfig = reactive({
+    optReport: false,
   });
 
   const handleSubmit = async () => {
+    const validate = await Promise.all([
+      baseForm.value.validate(),
+      advForm.value.validate(),
+    ]);
+
+    if (validate.some((res) => !!res)) {
+      Message.info('请检查表单');
+      return;
+    }
+
     await createAnalyzeTask({
       ...form,
-      ...paramsSettingForm,
+      ...advConfig,
     });
 
     Message.success('创建成功');
   };
 </script>
 
-<style scoped></style>
+<style scoped lang="less">
+  .form {
+    margin: 16px 0 -16px;
+  }
+</style>
