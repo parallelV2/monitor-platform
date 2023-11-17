@@ -116,7 +116,7 @@
             <img alt="avatar" :src="avatar" />
           </a-avatar>
           <template #content>
-            <a-doption>
+            <a-doption @click="goSSO">
               <a-space>
                 <icon-user />
                 <span>
@@ -145,6 +145,7 @@
   import { useAppStore, useUserStore } from '@/store';
   import useUser from '@/hooks/user';
   import Menu from '@/components/menu/index.vue';
+  import { ENV } from '@/config';
   import MessageBox from '../message-box/index.vue';
 
   const appStore = useAppStore();
@@ -187,6 +188,9 @@
   };
   const handleLogout = () => {
     logout();
+  };
+  const goSSO = () => {
+    window.location.href = ENV.SSO;
   };
   const toggleDrawerMenu = inject('toggleDrawerMenu') as () => void;
 </script>
