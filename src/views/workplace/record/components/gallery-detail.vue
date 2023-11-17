@@ -71,14 +71,14 @@
     {
       label: '差异通过情况',
       value: pass.value.diff
-        ? () => h(ATag, { color: 'green' }, '通过')
-        : () => h(ATag, { color: 'red' }, '不通过'),
+        ? () => h(ATag, { color: 'green' }, () => '通过')
+        : () => h(ATag, { color: 'red' }, () => '不通过'),
     },
     {
       label: '偏移通过情况',
       value: pass.value.shift
-        ? () => h(ATag, { color: 'green' }, '通过')
-        : () => h(ATag, { color: 'red' }, '不通过'),
+        ? () => h(ATag, { color: 'green' }, () => '通过')
+        : () => h(ATag, { color: 'red' }, () => '不通过'),
     },
   ]);
 
