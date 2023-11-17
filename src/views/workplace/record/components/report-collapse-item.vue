@@ -55,6 +55,10 @@
       value: report.value.id,
     },
     {
+      label: 'ChatGPT版本',
+      value: report.value.gptVersion,
+    },
+    {
       label: '创建用户ID',
       value: `${report.value.user}`,
     },

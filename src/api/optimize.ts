@@ -3,6 +3,7 @@ import { getLocalID } from '@/utils/auth';
 
 export interface OptimizeParam {
   taskId: string;
+  gptVersion: string;
 }
 
 export interface OptimizeTask {
@@ -12,6 +13,7 @@ export interface OptimizeTask {
   taskId: string;
   url: string;
   finished: string;
+  gptVersion: string;
   status: 0 | 1 | 2;
 }
 

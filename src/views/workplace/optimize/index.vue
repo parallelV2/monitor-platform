@@ -12,8 +12,13 @@
           <!-- 基本配置 -->
           <a-card>
             <span class="title">基本配置</span>
-            <a-form :model="form" layout="vertical" style="margin: 16px 0">
-              <a-form-item field="taskId" label="性能分析任务">
+            <a-form
+              ref="baseForm"
+              :model="form"
+              layout="vertical"
+              class="create-form"
+            >
+              <a-form-item field="taskId" label="性能分析任务" required>
                 <a-select
                   v-model="form.taskId"
                   placeholder="请选择性能分析任务"
@@ -29,7 +34,22 @@
           </a-card>
 
           <!-- 参数调整 -->
-          <params-setting v-model="paramsSettingForm" />
+          <a-card>
+            <span class="title">高级选项</span>
+            <a-form
+              ref="advForm"
+              :model="advConfig"
+              layout="vertical"
+              class="create-form"
+            >
+              <a-form-item field="gptVersion" label="GPT版本">
+                <a-radio-group v-model="advConfig.gptVersion" type="button">
+                  <a-radio value="4.0">ChatGPT 4.0</a-radio>
+                  <a-radio value="3.0">ChatGPT 3.0</a-radio>
+                </a-radio-group>
+              </a-form-item>
+            </a-form>
+          </a-card>
         </a-space>
       </a-col>
 
@@ -46,17 +66,21 @@
 <script setup lang="ts">
   import { reactive, ref, onMounted, computed } from 'vue';
 
-  import { ParamsSettingForm } from '@/components/params-setting/types';
-
-  import ParamsSetting from '@/components/params-setting/index.vue';
   import { Message } from '@arco-design/web-vue';
 
   import { createOptimizeTask } from '@/api/optimize';
   import { getAnalyzeTaskList, PATask } from '@/api/pa';
   import OptimizeHelper from './components/optimize-helper.vue';
 
+  const baseForm = ref();
+  const advForm = ref();
+
   const form = reactive({
     taskId: '',
+  });
+
+  const advConfig = reactive({
+    gptVersion: '4.0',
   });
 
   const tasks = ref<PATask[]>([]);
@@ -68,15 +92,20 @@
     }))
   );
 
-  const paramsSettingForm = reactive<ParamsSettingForm>({
-    optReport: true,
-    screenshotSpan: 30,
-  });
-
   const handleSubmit = async () => {
+    const validate = await Promise.all([
+      baseForm.value.validate(),
+      advForm.value.validate(),
+    ]);
+
+    if (validate.some((res) => !!res)) {
+      Message.info('请检查表单');
+      return;
+    }
+
     await createOptimizeTask({
       ...form,
-      ...paramsSettingForm,
+      ...advConfig,
     });
 
     Message.success('创建成功');
