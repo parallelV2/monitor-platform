@@ -16,7 +16,7 @@
               ref="baseFormRef"
               :model="form"
               layout="vertical"
-              style="margin: 16px 0"
+              class="create-form"
             >
               <a-form-item
                 field="beforeUrl"
@@ -39,7 +39,26 @@
           </a-card>
 
           <!-- 参数调整 -->
-          <params-setting v-model="paramsSettingForm" />
+          <a-card>
+            <span class="title">高级选项</span>
+            <a-form
+              ref="advForm"
+              :model="advConfig"
+              layout="vertical"
+              class="create-form"
+            >
+              <a-form-item field="optReport" label="同步生成优化报告">
+                <a-switch v-model="advConfig.optReport" />
+              </a-form-item>
+              <a-form-item field="screenshotSpan" label="截图间隔">
+                <a-input-number
+                  v-model="advConfig.screenshotSpan"
+                  placeholder="截图间隔"
+                  mode="button"
+                />
+              </a-form-item>
+            </a-form>
+          </a-card>
         </a-space>
       </a-col>
 
@@ -56,29 +75,38 @@
 <script setup lang="ts">
   import { reactive, ref } from 'vue';
 
-  import { ParamsSettingForm } from '@/components/params-setting/types';
   import { Message } from '@arco-design/web-vue';
 
-  import ParamsSetting from '@/components/params-setting/index.vue';
   import { createCompareTask } from '@/api/webcompare';
   import CompareHelper from './components/compare-helper.vue';
 
   const baseFormRef = ref();
+  const advForm = ref();
 
   const form = reactive({
     beforeUrl: '',
     afterUrl: '',
   });
 
-  const paramsSettingForm = reactive<ParamsSettingForm>({
-    optReport: true,
-    screenshotSpan: 30,
+  const advConfig = reactive({
+    optReport: false,
+    screenshotSpan: 3,
   });
 
   const handleSubmit = async () => {
+    const validate = await Promise.all([
+      baseFormRef.value.validate(),
+      advForm.value.validate(),
+    ]);
+
+    if (validate.some((res) => !!res)) {
+      Message.info('请检查表单');
+      return;
+    }
+
     await createCompareTask({
       ...form,
-      ...paramsSettingForm,
+      ...advConfig,
     });
 
     Message.success('创建成功');

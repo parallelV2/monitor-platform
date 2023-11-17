@@ -12,7 +12,12 @@
           <!-- 基本配置 -->
           <a-card>
             <span class="title">基本配置</span>
-            <a-form ref="baseForm" :model="form" layout="vertical" class="form">
+            <a-form
+              ref="baseForm"
+              :model="form"
+              layout="vertical"
+              class="create-form"
+            >
               <a-form-item field="url" label="分析页面" required>
                 <a-input v-model="form.url" placeholder="请输入分析页面" />
               </a-form-item>
@@ -36,7 +41,7 @@
               ref="advForm"
               :model="advConfig"
               layout="vertical"
-              class="form"
+              class="create-form"
             >
               <a-form-item field="optReport" label="同步生成优化报告">
                 <a-switch v-model="advConfig.optReport" />
@@ -96,9 +101,3 @@
     Message.success('创建成功');
   };
 </script>
-
-<style scoped lang="less">
-  .form {
-    margin: 16px 0 -16px;
-  }
-</style>
