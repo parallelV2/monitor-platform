@@ -31,13 +31,13 @@ export interface WebCompareDetail {
 }
 
 export function createCompareTask(data: WebCompareParam) {
-  return axios.post('/webcompare', { ...data, user: getLocalID() });
+  return axios.post('/api/webcompare', { ...data, user: getLocalID() });
 }
 
 export function getCompareTaskList() {
-  return axios.get<WebCompareTask[]>('/webcompare');
+  return axios.get<WebCompareTask[]>('/api/compare');
 }
 
 export function getCompareTaskDetail(id: string) {
-  return axios.get<WebCompareDetail>(`/webcompare/${id}`);
+  return axios.get<WebCompareDetail>(`/api/compare/${id}`);
 }

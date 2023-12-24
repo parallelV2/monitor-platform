@@ -61,7 +61,11 @@
     setLoading(true);
     try {
       const { data } = await queryMessageList();
-      messageData.messageList = data;
+      if (!Array.isArray(data)) {
+        messageData.messageList = [];
+      } else {
+        messageData.messageList = data;
+      }
     } catch (err) {
       // you can report use errorHandler or other
     } finally {

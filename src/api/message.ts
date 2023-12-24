@@ -10,9 +10,9 @@ export interface MessageRecord {
 export type MessageListType = MessageRecord[];
 
 export function queryMessageList() {
-  return axios.get<MessageListType>('/messageList');
+  return axios.get<MessageListType>('/api/msg/list');
 }
 
 export function setMessageStatus(id: MessageRecord['id']) {
-  return axios.put<MessageListType>(`/messageRead?id=${id}`);
+  return axios.put<MessageListType>(`/api/msg/${id}`);
 }

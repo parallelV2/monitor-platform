@@ -17,9 +17,9 @@ export interface PATask {
 }
 
 export function createAnalyzeTask(data: PAParam) {
-  return axios.post('/pa', { ...data, user: getLocalID() });
+  return axios.post('/api/pa', { ...data, user: getLocalID() });
 }
 
 export function getAnalyzeTaskList() {
-  return axios.get<PATask[]>('/pa');
+  return axios.get<PATask[]>('/api/pa');
 }
