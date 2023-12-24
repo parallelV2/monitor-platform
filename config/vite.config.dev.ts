@@ -1,9 +1,14 @@
-import { mergeConfig } from 'vite';
+import {
+  mergeConfig,
+  defineConfig,
+  type ConfigEnv,
+  type UserConfigExport,
+} from 'vite';
 import eslint from 'vite-plugin-eslint';
 import baseConfig from './vite.config.base';
 
-export default mergeConfig(
-  {
+export default defineConfig((configEnv) =>
+  mergeConfig((baseConfig as (o: ConfigEnv) => UserConfigExport)(configEnv), {
     mode: 'development',
     server: {
       open: true,
@@ -18,6 +23,5 @@ export default mergeConfig(
         exclude: ['node_modules'],
       }),
     ],
-  },
-  baseConfig
+  })
 );
