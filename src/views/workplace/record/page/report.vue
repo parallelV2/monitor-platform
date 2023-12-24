@@ -5,11 +5,14 @@
         <a-skeleton-line :rows="3" />
       </a-space>
     </a-skeleton>
-    <a-collapse v-else>
+    <a-collapse v-else-if="taskList.length">
       <template v-for="report in taskList" :key="report.id">
         <report-collapse-item :report="report" />
       </template>
     </a-collapse>
+    <template v-else>
+      <a-result title="暂无内容"> </a-result>
+    </template>
   </div>
 </template>
 
