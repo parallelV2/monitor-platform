@@ -31,7 +31,7 @@ export interface WebCompareDetail {
 }
 
 export function createCompareTask(data: WebCompareParam) {
-  return axios.post('/api/webcompare', { ...data, user: getLocalID() });
+  return axios.post('/api/compare', { ...data, user: getLocalID() });
 }
 
 export function getCompareTaskList() {
