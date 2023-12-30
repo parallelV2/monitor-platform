@@ -14,6 +14,15 @@ export interface PATask {
   user: number;
   url: string;
   status: 0 | 1 | 2;
+  finished: string;
+}
+
+export interface PATaskDetail {
+  puppeteer: Record<string, { label: string; value: number }>;
+  lighthouse: Record<
+    string,
+    { title: string; value: string; description: string }
+  >;
 }
 
 export function createAnalyzeTask(data: PAParam) {
@@ -22,4 +31,8 @@ export function createAnalyzeTask(data: PAParam) {
 
 export function getAnalyzeTaskList() {
   return axios.get<PATask[]>('/api/pa');
+}
+
+export function getAnalyzeTaskDetail(id: string) {
+  return axios.get<PATaskDetail>(`/api/pa/${id}`);
 }
