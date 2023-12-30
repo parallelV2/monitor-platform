@@ -11,4 +11,6 @@ interface ImportMetaEnv {
   readonly VITE_SSO: string;
   readonly VITE_SSO_KEY: string;
   readonly VITE_SSO_API: string;
+  readonly VITE_GPT_API: string;
+  readonly VITE_GPT_KEY: string;
 }
