@@ -22,8 +22,8 @@
     </template>
 
     <report-detail
-      :id="report.id"
       v-model:visible="detailVisible"
+      :gpt-version="report.gptVersion"
       :task-id="report.taskId"
       :url="report.url"
     ></report-detail>

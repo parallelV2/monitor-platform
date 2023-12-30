@@ -44,8 +44,8 @@
             >
               <a-form-item field="gptVersion" label="GPT版本">
                 <a-radio-group v-model="advConfig.gptVersion" type="button">
-                  <a-radio value="4.0">ChatGPT 4.0</a-radio>
-                  <a-radio value="3.0">ChatGPT 3.0</a-radio>
+                  <a-radio value="4.0">ChatGPT 4</a-radio>
+                  <a-radio value="3.0">ChatGPT 3</a-radio>
                 </a-radio-group>
               </a-form-item>
             </a-form>
