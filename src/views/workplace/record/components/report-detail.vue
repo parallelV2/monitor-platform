@@ -16,7 +16,7 @@
       </p>
 
       <a-spin :loading="loading" style="width: 100%">
-        <div class="content"> {{ content }} </div>
+        <div class="content">{{ content }}</div>
       </a-spin>
     </div>
   </a-modal>
@@ -100,5 +100,10 @@
     color: var(--color-neutral-10);
     padding: 16px;
     border-radius: 8px;
+    cursor: auto;
+    text-rendering: auto;
+    text-transform: none;
+    white-space: pre-wrap;
+    overflow-wrap: break-word;
   }
 </style>
