@@ -15,6 +15,15 @@
 
       <div class="content-title"> Puppeteer检测数据 </div>
       <div class="content">
+        <div class="charts">
+          <div class="charts-item">
+            <v-chart ref="pieRef" class="chart" autoresize :option="pieData" />
+          </div>
+          <div class="charts-item">
+            <v-chart ref="barRef" class="chart" autoresize :option="barData" />
+          </div>
+        </div>
+
         <a-grid :cols="3" :col-gap="12" :row-gap="16">
           <a-grid-item
             v-for="item in puppeteerData"
@@ -51,6 +60,13 @@
 <script setup lang="ts">
   import { ref, watch, computed } from 'vue';
   import { getAnalyzeTaskDetail, type PATaskDetail } from '@/api/pa';
+  import { use } from 'echarts/core';
+  import { CanvasRenderer } from 'echarts/renderers';
+  import { PieChart, BarChart } from 'echarts/charts';
+  import { TooltipComponent } from 'echarts/components';
+  import VChart from 'vue-echarts';
+
+  use([CanvasRenderer, PieChart, BarChart, TooltipComponent]);
 
   const props = defineProps<{
     visible: boolean;
@@ -63,6 +79,8 @@
   }>();
 
   const content = ref<PATaskDetail>();
+  const barRef = ref<typeof VChart>();
+  const pieRef = ref<typeof VChart>();
 
   const getDetail = () => {
     getAnalyzeTaskDetail(props.id).then((res) => {
@@ -84,6 +102,52 @@
     })
   );
 
+  const pieData = computed(() => {
+    const data = puppeteerData.value.map((item) => ({
+      name: item.label,
+      value: item.value,
+    }));
+
+    return {
+      tooltip: {
+        trigger: 'item',
+        formatter: '{b} <br/>{c}ms',
+      },
+      series: [
+        {
+          type: 'pie',
+          radius: '55%',
+          data,
+        },
+      ],
+    };
+  });
+
+  const barData = computed(() => {
+    const data = puppeteerData.value.map((item) => item.value);
+    const axisData = puppeteerData.value.map((item) => item.label);
+
+    return {
+      tooltip: {
+        trigger: 'item',
+        formatter: '{b} <br/>耗时{c}ms',
+      },
+      xAxis: {
+        type: 'category',
+        data: axisData,
+      },
+      yAxis: {
+        type: 'value',
+      },
+      series: [
+        {
+          type: 'bar',
+          data,
+        },
+      ],
+    };
+  });
+
   watch(
     () => props.visible,
     (val) => {
@@ -102,6 +166,21 @@
 
     &:last-of-type {
       margin-bottom: 0;
+    }
+
+    .charts {
+      display: flex;
+      justify-content: space-between;
+
+      &-item {
+        width: calc((100% - 16px) / 2);
+        height: 300px;
+
+        .chart {
+          height: 300px;
+          width: 100%;
+        }
+      }
     }
   }
 
