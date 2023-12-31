@@ -1,3 +1,4 @@
+import { getLocalID } from '@/utils/auth';
 import axios from 'axios';
 
 export interface MessageRecord {
@@ -10,9 +11,9 @@ export interface MessageRecord {
 export type MessageListType = MessageRecord[];
 
 export function queryMessageList() {
-  return axios.get<MessageListType>('/api/msg/list');
+  return axios.get<MessageListType>(`/api/msg/list?id=${getLocalID()}`);
 }
 
 export function setMessageStatus(id: MessageRecord['id']) {
-  return axios.put<MessageListType>(`/api/msg/${id}`);
+  return axios.put<MessageListType>(`/api/msg?id=${id}`);
 }
