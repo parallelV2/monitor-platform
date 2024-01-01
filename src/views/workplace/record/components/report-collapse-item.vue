@@ -68,17 +68,19 @@
           label: '创建于',
           value: report.value.created,
         },
-        report.value.finished !== '0' && {
-          label: '完成于',
-          value: report.value.finished,
-        },
-        report.value.finished !== '0' && {
-          label: '用时',
-          value: `${dayjs(report.value.finished).diff(
-            report.value.created,
-            'minute'
-          )}分钟`,
-        },
+        report.value.finished &&
+          report.value.finished !== '0' && {
+            label: '完成于',
+            value: report.value.finished,
+          },
+        report.value.finished &&
+          report.value.finished !== '0' && {
+            label: '用时',
+            value: `${dayjs(report.value.finished).diff(
+              report.value.created,
+              'minute'
+            )}分钟`,
+          },
       ] as { label: string; value: string }[]
   );
 </script>
