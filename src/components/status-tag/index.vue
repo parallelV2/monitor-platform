@@ -1,11 +1,11 @@
 <template>
-  <a-tag v-if="status === 0" color="arcoblue">
+  <a-tag v-if="Number(status) === 0" color="arcoblue">
     <template #icon>
       <icon-sync class="loading" spin />
     </template>
     执行中
   </a-tag>
-  <a-tag v-else-if="status === 1" color="green">
+  <a-tag v-else-if="Number(status) === 1" color="green">
     <template #icon>
       <icon-check-circle class="success" />
     </template>

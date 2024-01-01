@@ -22,11 +22,13 @@ export interface OptimizeTaskDetail {
 }
 
 export function createOptimizeTask(data: OptimizeParam) {
-  return axios.post('/api/optimize', { ...data, user: getLocalID() });
+  return axios.post('/api/optimize', { ...data, user: Number(getLocalID()) });
 }
 
 export function getOptimizeTaskList() {
-  return axios.get<OptimizeTask[]>('/api/optimize');
+  return axios.get<OptimizeTask[]>(
+    `/api/optimize?user=${Number(getLocalID())}`
+  );
 }
 
 export function getOptimizeTaskDetail(id: string) {

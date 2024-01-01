@@ -9,7 +9,7 @@
     </template>
     <template #extra>
       <a-button
-        v-if="report.status === 1"
+        v-if="Number(report.status) === 1"
         size="mini"
         type="text"
         @click.stop="detailVisible = true"
@@ -22,7 +22,7 @@
     </template>
 
     <analyze-detail
-      :id="report.id"
+      :id="report.taskID"
       v-model:visible="detailVisible"
       :url="report.url"
     ></analyze-detail>

@@ -27,7 +27,7 @@
   const fetchData = () => {
     getAnalyzeTaskList()
       .then((res) => {
-        taskList.value = res.data as PATask[];
+        taskList.value = res.data.data as PATask[];
       })
       .finally(() => {
         loading.value = false;

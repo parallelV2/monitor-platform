@@ -1,5 +1,6 @@
 import axios from 'axios';
 import { getLocalID } from '@/utils/auth';
+import { Restful } from '@/types/global';
 
 export interface PAParam {
   url: string;
@@ -10,6 +11,7 @@ export interface PAParam {
 
 export interface PATask {
   id: string;
+  taskID: string;
   created: string;
   user: number;
   url: string;
@@ -30,9 +32,9 @@ export function createAnalyzeTask(data: PAParam) {
 }
 
 export function getAnalyzeTaskList() {
-  return axios.get<PATask[]>('/api/pa');
+  return axios.get<Restful<PATask[]>>(`/api/pa?user=${Number(getLocalID())}`);
 }
 
 export function getAnalyzeTaskDetail(id: string) {
-  return axios.get<PATaskDetail>(`/api/pa/${id}`);
+  return axios.get<Restful<PATaskDetail>>(`/api/pa/${id}`);
 }

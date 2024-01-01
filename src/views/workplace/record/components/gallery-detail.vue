@@ -84,8 +84,8 @@
 
   const getDetail = () => {
     getCompareTaskDetail(props.id).then((res) => {
-      imgs.value = res.data.imgs;
-      pass.value = res.data.pass;
+      imgs.value = res.data.data.imgs;
+      pass.value = res.data.data.pass;
     });
   };
 

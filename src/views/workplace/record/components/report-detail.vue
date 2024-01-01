@@ -44,17 +44,17 @@
   const getDetail = () => {
     getAnalyzeTaskDetail(props.taskId)
       .then((res) => {
-        const puppeteerData = Object.values(res.data.puppeteer || {});
-        const lighthouseData = Object.values(res.data.lighthouse || {}).map(
-          (item) => {
-            const titleArr = item.title.split('(');
-            return {
-              ...item,
-              title: titleArr[0],
-              subTitle: titleArr[1].replace(')', ''),
-            };
-          }
-        );
+        const puppeteerData = Object.values(res.data.data.puppeteer || {});
+        const lighthouseData = Object.values(
+          res.data.data.lighthouse || {}
+        ).map((item) => {
+          const titleArr = item.title.split('(');
+          return {
+            ...item,
+            title: titleArr[0],
+            subTitle: titleArr[1].replace(')', ''),
+          };
+        });
 
         let text = '网站的测试报告如下：';
         puppeteerData.forEach((item) => {

@@ -44,13 +44,15 @@
       <div class="content-title"> Lighthouse测试数据 </div>
       <div class="content">
         <a-grid :cols="2" :col-gap="12" :row-gap="16">
-          <a-grid-item v-for="item in lighthouseData" :key="item.title">
-            <div class="lighthouse-item">
-              <div class="lighthouse-item-title">{{ item.title }}</div>
-              <div class="lighthouse-item-subtitle">{{ item.subTitle }}</div>
-              <div class="lighthouse-item-value">{{ item.value }}</div>
-            </div>
-          </a-grid-item>
+          <template v-for="item in lighthouseData" :key="item.title">
+            <a-grid-item v-if="item.value">
+              <div class="lighthouse-item">
+                <div class="lighthouse-item-title">{{ item.title }}</div>
+                <div class="lighthouse-item-subtitle">{{ item.subTitle }}</div>
+                <div class="lighthouse-item-value">{{ item.value }}</div>
+              </div>
+            </a-grid-item>
+          </template>
         </a-grid>
       </div>
     </div>
@@ -84,7 +86,7 @@
 
   const getDetail = () => {
     getAnalyzeTaskDetail(props.id).then((res) => {
-      content.value = res.data;
+      content.value = res.data.data;
     });
   };
 

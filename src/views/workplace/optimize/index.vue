@@ -113,7 +113,7 @@
 
   onMounted(() => {
     getAnalyzeTaskList().then((res) => {
-      tasks.value = res.data;
+      tasks.value = res.data.data;
     });
   });
 </script>

@@ -70,6 +70,7 @@
   const taskOptions = computed(() =>
     tasks.value.map((i) => ({
       id: i.id,
+      taskID: i.taskID,
       created: i.created,
       label: `${i.url} (${i.created})`,
       value: i.id,
@@ -86,13 +87,15 @@
   });
 
   const handleQueryTasks = () => {
-    const promises = sortedTask.value.map((t) => getAnalyzeTaskDetail(t.id));
+    const promises = sortedTask.value.map((t) =>
+      getAnalyzeTaskDetail(t.taskID)
+    );
 
     loading.value = true;
     Promise.all(promises)
       .then((value) => {
         selectedDatas.value = value.map((v, i) => ({
-          ...v.data,
+          ...v.data.data,
           date: sortedTask.value[i].created,
         }));
       })
@@ -202,7 +205,7 @@
 
   onMounted(() => {
     getAnalyzeTaskList().then((res) => {
-      tasks.value = res.data;
+      tasks.value = res.data.data;
     });
   });
 </script>

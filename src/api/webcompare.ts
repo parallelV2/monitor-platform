@@ -1,5 +1,6 @@
 import axios from 'axios';
 import { getLocalID } from '@/utils/auth';
+import type { Restful } from '@/types/global';
 
 export interface WebCompareParam {
   beforeUrl: string;
@@ -35,9 +36,11 @@ export function createCompareTask(data: WebCompareParam) {
 }
 
 export function getCompareTaskList() {
-  return axios.get<WebCompareTask[]>('/api/compare');
+  return axios.get<Restful<WebCompareTask[]>>(
+    `/api/compare?user=${Number(getLocalID())}`
+  );
 }
 
 export function getCompareTaskDetail(id: string) {
-  return axios.get<WebCompareDetail>(`/api/compare/${id}`);
+  return axios.get<Restful<WebCompareDetail>>(`/api/compare/${id}`);
 }

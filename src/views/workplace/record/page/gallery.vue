@@ -26,7 +26,7 @@
   const fetchData = () => {
     getCompareTaskList()
       .then((res) => {
-        taskList.value = res.data as WebCompareTask[];
+        taskList.value = res.data.data;
       })
       .finally(() => {
         loading.value = false;
