@@ -27,7 +27,7 @@
   const fetchData = () => {
     getOptimizeTaskList()
       .then((res) => {
-        taskList.value = res.data as OptimizeTask[];
+        taskList.value = res.data.optimizes as OptimizeTask[];
       })
       .finally(() => {
         loading.value = false;

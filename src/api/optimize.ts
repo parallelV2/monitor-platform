@@ -27,7 +27,7 @@ export function createOptimizeTask(data: OptimizeParam) {
 }
 
 export function getOptimizeTaskList() {
-  return axios.get<OptimizeTask[]>(
+  return axios.get<{ optimizes: OptimizeTask[] }>(
     `/api/optimize?user=${Number(getLocalID())}`
   );
 }
