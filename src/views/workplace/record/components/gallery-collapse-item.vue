@@ -45,35 +45,38 @@
 
   const detailVisible = ref(false);
 
-  const content = computed(() => [
-    {
-      label: '站点URL',
-      value: `${report.value.beforeUrl} 对比 ${report.value.afterUrl}`,
-    },
-    {
-      label: '任务ID',
-      value: report.value.id,
-    },
-    {
-      label: '创建用户ID',
-      value: `${report.value.user}`,
-    },
-    {
-      label: '创建于',
-      value: report.value.created,
-    },
-    {
-      label: '完成于',
-      value: report.value.finished,
-    },
-    {
-      label: '用时',
-      value: `${dayjs(report.value.finished).diff(
-        report.value.created,
-        'minute'
-      )}分钟`,
-    },
-  ]);
+  const content = computed(
+    () =>
+      [
+        {
+          label: '站点URL',
+          value: `${report.value.beforeUrl} 对比 ${report.value.afterUrl}`,
+        },
+        {
+          label: '任务ID',
+          value: report.value.id,
+        },
+        {
+          label: '创建用户ID',
+          value: `${report.value.user}`,
+        },
+        {
+          label: '创建于',
+          value: report.value.created,
+        },
+        report.value.finished !== '0' && {
+          label: '完成于',
+          value: report.value.finished,
+        },
+        report.value.finished !== '0' && {
+          label: '用时',
+          value: `${dayjs(report.value.finished).diff(
+            report.value.created,
+            'minute'
+          )}分钟`,
+        },
+      ] as { label: string; value: string }[]
+  );
 </script>
 
 <style lang="less" scoped>
