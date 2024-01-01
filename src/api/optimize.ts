@@ -4,6 +4,7 @@ import { getLocalID } from '@/utils/auth';
 export interface OptimizeParam {
   taskId: string;
   gptVersion: string;
+  url: string;
 }
 
 export interface OptimizeTask {

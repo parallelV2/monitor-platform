@@ -77,6 +77,7 @@
 
   const form = reactive({
     taskId: '',
+    url: '',
   });
 
   const advConfig = reactive({
@@ -88,7 +89,7 @@
   const taskOptions = computed(() =>
     tasks.value.map((i) => ({
       label: `${i.url} (${i.created})`,
-      value: i.id,
+      value: i.taskID,
     }))
   );
 
@@ -102,6 +103,8 @@
       Message.info('请检查表单');
       return;
     }
+
+    form.url = tasks.value.find((t) => t.taskID === form.taskId)?.url || '';
 
     await createOptimizeTask({
       ...form,
